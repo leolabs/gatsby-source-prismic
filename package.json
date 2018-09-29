@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-source-prismic",
+  "name": "@leolabs/gatsby-source-prismic",
   "version": "1.2.0",
   "description": "Gatsby source plugin for building websites using prismic.io as a data source",
   "scripts": {
