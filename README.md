@@ -69,6 +69,11 @@ plugins: [
           // Your HTML serializer
         }
       ),
+
+      // Set a default language when fetching documents. The default value is
+      // '*' which will fetch all languages.
+      // See: https://prismic.io/docs/javascript/query-the-api/query-by-language
+      lang: '*',
     }
   }
 ]
@@ -170,6 +175,12 @@ URL is provided at the `url` field.
 If the link type is a web link (i.e. a URL external from your site), the URL is
 provided without additional processing.
 
+All other URL fields, such as `target`, `lang`, and `isBroken`, are provided on
+the field, as well.
+
+The `target` field defaults to an empty string. This allows you to always query
+the `target` field even if it is not set in Prismic.
+
 **Note**: If you need to access the raw data, the original data is accessible
 using the `raw` field, though use of this field is discouraged.
 
@@ -182,6 +193,7 @@ using the `raw` field, though use of this field is discouraged.
         data {
           featured_post {
             url
+            target
           }
         }
       }
@@ -396,8 +408,8 @@ To learn more about image processing, check the documentation of
 ```js
 const path = require('path')
 
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
 
   const pages = await graphql(`
     {
